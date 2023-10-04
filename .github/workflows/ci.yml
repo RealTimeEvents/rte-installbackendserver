@@ -1,0 +1,73 @@
+name: CI
+
+on:
+  workflow_call:
+
+jobs:
+  CI:
+    runs-on: ${{matrix.os}}
+    env:
+      MYSQL_DATABASE: ${{vars.MYSQL_DATABASE}}
+      MYSQL_HOST:  ${{vars.MYSQL_HOST}}
+      MYSQL_INSTALLER_USERID: ${{vars.MYSQL_INSTALLER_USERID}}
+      MYSQL_INSTALLER_PWD: ${{vars.MYSQL_INSTALLER_PWD}}
+#      MYSQL_PWD: N0tS0S3curePassw0rd
+      MYSQL_TCP_PORT: ${{vars.MYSQL_TCP_PORT}}
+      SQLALCHEMY_SILENCE_UBER_WARNING: 1
+    strategy:
+      fail-fast: true
+      matrix:
+        os: ['ubuntu-latest']
+        python-version: ['3.11']
+    services:
+      mysql:
+        image: mysql:8.0.21
+        ports:
+          - ${{vars.MYSQL_TCP_PORT}}:3306
+        options: --health-cmd="mysqladmin ping" --health-interval=10s --health-timeout=5s --health-retries=3
+        env:
+#          MYSQL_ALLOW_EMPTY_PASSWORD: yes
+          MYSQL_ROOT_PASSWORD: ${{vars.MYSQL_ROOT_PWD}}
+          MYSQL_DATABASE: ${{vars.MYSQL_DATABASE}}
+
+    steps:
+      - name: Check out code
+        uses: actions/checkout@v4
+
+      - name: Set up Python
+        uses: actions/setup-python@v4
+        with:
+          python-version: ${{ matrix.python-version }}
+          architecture: x64
+
+      - name: Verify DB exists
+        run: mysql --host ${{vars.MYSQL_HOST}} -uroot -p${{vars.MYSQL_ROOT_PWD}} -e "SHOW DATABASES"
+
+      - name: Upgrade pip
+        run: python -m pip rte-installbackend --upgrade pip
+
+#      ToDo
+#      If there is certainty that the requirements are completely installed from
+#      the pyproject.toml file, this section can be removed.
+#      - name: Install dependencies
+#        run: |
+#          python -m pip rte-installbackend --upgrade pip
+#          pip rte-installbackend -r requirements/requirements.txt -r requirements/requirements_dev.txt
+
+      - name: Install editable package
+        run: pip rte-installbackend -e .[dev]
+
+#      ToDo
+#      Testing purposes.  Remove when PyTest works.
+#      - name: Print Environment
+#        run: printenv
+
+#      ToDo
+#      PyTest does not work.  it does not get a connection to the MySQL db.
+#      - name: Run pytest
+#        run: pytest --cov=./ -m select
+
+#      ToDo
+#      Not sure if this is possible with a private repository or if we need a licence.
+#      - name: Upload coverage to Codecov
+#        uses: codecov/codecov-action@v3

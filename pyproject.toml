@@ -1,0 +1,76 @@
+[project]
+name = 'rte-installbackend'
+version = '0.0.1'
+authors = [
+    { name = 'Hendrik du Toit', email = 'hendrik@brightedge.co.za' },
+    { name = 'Henru du Toit', email = 'henru@brightedge.co.za' },
+    { name = 'Dirk du Toit', email = 'dirk@brightedge.co.za' },
+]
+description = 'Real Time Events backend server installation'
+license = {file = 'LICENSE'}
+classifiers = [
+    'Development Status :: 3 - Alpha',
+    'Intended Audience :: Developers',
+    'Intended Audience :: System Administrators',
+    'Topic :: Internet :: WWW/HTTP',
+    'Topic :: Office/Business',
+    'Programming Language :: Python :: 3.11'
+]
+readme = {file = 'README.md', content-type = 'text/x-md'}
+requires-python = '>=3.11, <=12.0'
+dependencies = [
+    'installit',
+  ]
+
+[project.optional-dependencies]
+dev = [
+    'configparserext',
+    'releaselogit',
+    'git-it',
+    'pytest',
+    'pytest-cov',
+    'rstcheck',
+    'semverit',
+    'toml',
+    #codecov'
+    #docutils'
+]
+
+[project.urls]
+Changelog = 'https://github.com/RealTimeEvents/rte-api/blob/enhancement/master/CHANGES.md'
+Homepage = 'https://github.com/RealTimeEvents/rte-api'
+
+[build-system]
+requires = [
+    "setuptools >= 68",
+    "wheel",
+    "setuptools-git >= 1.1",
+]
+build-backend = "setuptools.build_meta"
+
+[tool.black]
+skip-string-normalization = true
+line-length = 120
+target-version = ["py311"]
+
+[tool.codespell]
+count = ''
+quiet-level = 2
+skip = 'documentation/Archive/*'
+
+[tool.coverage.run]
+source = ['src']
+
+[tool.pytest.ini_options]
+addopts = ['--import-mode=importlib', '-vv', '--ignore-glob=*\\Archive']
+#addopts = ['--import-mode=importlib', "-v", "--cov=./", "--ignore-glob=*\\Archive", "--cov-report=html"]
+pythonpath = ['src','src/rte-db', 'tests' ]
+markers = [
+    "select: Run a selection of tests",
+    "structure_accounting: Run tests linked to accounting",
+]
+filterwarnings = [
+#    "ignore::DeprecationWarning",
+]
+#python_functions = 'demo_setup'
+testpaths = 'tests'
