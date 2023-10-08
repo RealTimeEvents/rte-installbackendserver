@@ -20,6 +20,11 @@ readme = {file = 'README.md', content-type = 'text/x-md'}
 requires-python = '>=3.11, <=12.0'
 dependencies = [
     'installit',
+    'argparse',
+    'logging',
+    'shutil',
+    'sys',
+    'pathlib'
   ]
 
 [project.optional-dependencies]

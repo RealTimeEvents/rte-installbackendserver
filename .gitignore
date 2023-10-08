@@ -13,6 +13,7 @@ docs/build/
 docs/_build/
 docs/source/generated/
 htmlcov/
+install.bat
 VersionArchive/
 dist/
 tmp/
