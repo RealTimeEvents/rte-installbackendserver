@@ -45,6 +45,8 @@ git clone $_github_url
 cd $_repo_name
 pip install -e .
 
+# Start the Python installation
+#python src/$_repo_name/$_repo_name.py -c src/$_repo_name/$_ini
 
 # Prompt to close the session
 echo Session completed
