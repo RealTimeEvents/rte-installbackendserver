@@ -19,8 +19,10 @@ _src_dir="/usr/local/src"
 # Create installation sudo user
 _user_name=rtinstall
 #useradd $_user_name
-adduser $_user_name
-usermod -aG sudo $_user_name
+#adduser $_user_name
+#usermod -aG sudo $_user_name
+useradd -rm -d /home/${LINUX_INSTALLER_USERID} -s /bin/bash -g root -G sudo ${LINUX_INSTALLER_USERID}
+echo "${LINUX_INSTALLER_USERID}:${LINUX_INSTALLER_PWD}" | chpasswd
 
 # Install pre-req packages
 apt update
