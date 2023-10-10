@@ -16,7 +16,7 @@ _venv_name_dir="$_venv_base_dir/$_repo_name"
 _src_dir="/usr/local/src"
 #_rte_install_dir=$_rte_install_venv/lib/python3.8/site-packages/rte/install
 
-# Create installation sudo user
+@ECHO ** Create installation sudo user
 _user_name=rtinstall
 #useradd $_user_name
 #adduser $_user_name
@@ -24,33 +24,34 @@ _user_name=rtinstall
 useradd -rm -d /home/${LINUX_INSTALLER_USERID} -s /bin/bash -g root -G sudo ${LINUX_INSTALLER_USERID}
 echo "${LINUX_INSTALLER_USERID}:${LINUX_INSTALLER_PWD}" | chpasswd
 
-# Install pre-req packages
+@ECHO ** Install pre-req packages
 apt update
 apt-get -y install python3-pip
 apt-get -y install mysql-server
 apt-get -y install python3-venv
 
-# Create virtual environment
+@ECHO ** Create virtual environment
 mkdir $_venv_base_dir
 chmod 777 $_venv_base_dir
 python3 -m venv --clear $_venv_name_dir
 source $_venv_name_dir/bin/activate
 pip install --upgrade InstallIt
 
-# Clone the private repository
+@ECHO ** Clone the private repository
 echo "Cloning the private repository from GitHub..."
 cd $_src_dir
 git clone $_github_url
 
 
-# Install and configure the server packages
+@ECHO ** Install and configure the server packages
 cd $_repo_name
 pip install -e .
 
-# Start the Python installation
+@ECHO ** Start the Python installation
+@ECHO ** python src/$_repo_name/$_repo_name.py -c src/$_repo_name/$_ini
 #python src/$_repo_name/$_repo_name.py -c src/$_repo_name/$_ini
 
-# Prompt to close the session
+@ECHO ** Prompt to close the session
 echo Session completed
 echo Press any key to f_inish and quit
 read quit
