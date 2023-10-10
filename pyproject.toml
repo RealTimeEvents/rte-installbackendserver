@@ -19,18 +19,20 @@ classifiers = [
 readme = {file = 'README.md', content-type = 'text/x-md'}
 requires-python = '>=3.11, <=12.0'
 dependencies = [
+    'configparserext',
+    'beetools',
+    'termcolor',
     'installit',
   ]
 
 [project.optional-dependencies]
 dev = [
-    'configparserext',
-    'releaselogit',
+#    'releaselogit',
     'git-it',
     'pytest',
     'pytest-cov',
     'rstcheck',
-    'semverit',
+#    'semverit',
     'toml',
     #codecov'
     #docutils'
