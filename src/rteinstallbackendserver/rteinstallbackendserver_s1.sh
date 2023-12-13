@@ -8,7 +8,7 @@
 _github_org="RealTimeEvents"
 _github_token=$2
 _ini=$1 # Ini configuration file specific to platform and machine
-_repo_name="rte-installbackendserver"
+_repo_name="rteinstallbackendserver"
 _venv_base_dir="/usr/venv"
 _share_dir="/usr/local/share"
 _src_dir="/usr/local/src"

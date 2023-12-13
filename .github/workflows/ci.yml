@@ -44,18 +44,18 @@ jobs:
         run: mysql --host ${{vars.MYSQL_HOST}} -uroot -p${{vars.MYSQL_ROOT_PWD}} -e "SHOW DATABASES"
 
       - name: Upgrade pip
-        run: python -m pip rte-installbackend --upgrade pip
+        run: python -m pip rteinstallbackend --upgrade pip
 
 #      ToDo
 #      If there is certainty that the requirements are completely installed from
 #      the pyproject.toml file, this section can be removed.
 #      - name: Install dependencies
 #        run: |
-#          python -m pip rte-installbackend --upgrade pip
-#          pip rte-installbackend -r requirements/requirements.txt -r requirements/requirements_dev.txt
+#          python -m pip rteinstallbackend --upgrade pip
+#          pip rteinstallbackend -r requirements/requirements.txt -r requirements/requirements_dev.txt
 
       - name: Install editable package
-        run: pip rte-installbackend -e .[dev]
+        run: pip rteinstallbackend -e .[dev]
 
 #      ToDo
 #      Testing purposes.  Remove when PyTest works.

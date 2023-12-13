@@ -1,5 +1,5 @@
 [project]
-name = 'rte-installbackend'
+name = 'rteinstallbackend'
 version = '0.0.2'
 authors = [
     { name = 'Hendrik du Toit', email = 'hendrik@brightedge.co.za' },
