@@ -17,15 +17,15 @@ jobs:
         uses: actions/checkout@v4
 
       - name: Set up Python
-        uses: actions/setup-python@v4
+        uses: actions/setup-python@v5
         with:
           python-version: ${{ matrix.python-version }}
 
       - name: Upgrade pip
-        run: python -m pip rte-installbackend --upgrade pip rstcheck
+        run: python -m pip rteinstallbackend --upgrade pip rstcheck
 
 #      - name: Install dependencies # Incompatible with Pydantic 2.0.0
-#        run: pip rte-installbackend rstcheck
+#        run: pip rteinstallbackend rstcheck
 
       - name: Check documents
         run: rstcheck README.rst

@@ -1,6 +1,6 @@
 """Install a Reahl Linux Server
 
-Use the InstallIt framework to rte-installbackend a Linux Server for a Reahl Application
+Use the InstallIt framework to rteinstallbackend a Linux Server for a Reahl Application
 """
 import argparse
 import logging
@@ -436,7 +436,7 @@ class InstallReahlServer:
             script_cmds = ['sudo -i << _EOF_']
         script_cmds.append(f'{self.reahl_activate_env(p_app_name)}\n')
         for package in self.ini.get('ReahlPreReqPackages', self.package_prefix, p_prefix=True, p_split=True):
-            script_cmds.append(f'pip3 rte-installbackend {package[1][0]}')
+            script_cmds.append(f'pip3 rteinstallbackend {package[1][0]}')
         if self.curr_os == beeutils.LINUX:
             script_cmds.append('exit')
             script_cmds.append('_EOF_')
@@ -465,7 +465,7 @@ class InstallReahlServer:
             script_cmds = ['sudo -i << _EOF_']
         script_cmds.append(f'{self.reahl_activate_env(p_reahl_app_name)}\n')
         script_cmds.append(
-            'pip3 rte-installbackend --find-links {} {}'.format(
+            'pip3 rteinstallbackend --find-links {} {}'.format(
                 self.reahl_distribution_dir,
                 self.reahl_distribution_dir / p_reahl_wheel,
             )
@@ -493,9 +493,9 @@ class InstallReahlServer:
         script_cmds = []
         for package in self.ini.get('SystemPreReqPackages', self.package_prefix, p_prefix=True, p_split=True):
             if self.curr_os == beeutils.LINUX:
-                script_cmds.append(f'sudo pip3 rte-installbackend {package[1][0]}')
+                script_cmds.append(f'sudo pip3 rteinstallbackend {package[1][0]}')
             else:
-                script_cmds.append(f'pip3 rte-installbackend {package[1][0]}')
+                script_cmds.append(f'pip3 rteinstallbackend {package[1][0]}')
         switches = []
         if self.curr_os == beeutils.LINUX:
             switches = ['-x']

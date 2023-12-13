@@ -5,29 +5,33 @@
 #set -e
 
 # Variables
-_ini=$1 # Ini configuration file specific to platform and machine
-_github_token=$2
 _github_org="RealTimeEvents"
-_repo_name="rte-installbackendserver"
-_github_url="https://$_github_token:@github.com/$_github_org/$_repo_name.git"
-_usr_dir=/usr
-_venv_base_dir="$_usr_dir/venv"
-_venv_name_dir="$_venv_base_dir/$_repo_name"
+_github_token=$2
+_ini=$1 # Ini configuration file specific to platform and machine
+_repo_name="rteinstallbackendserver"
+_venv_base_dir="/usr/venv"
+_share_dir="/usr/local/share"
 _src_dir="/usr/local/src"
-#_rte_install_dir=$_rte_install_venv/lib/python3.8/site-packages/rte/install
+
+_github_url="https://$_github_token:@github.com/$_github_org/$_repo_name.git"
+_venv_name_dir="$_venv_base_dir/$_repo_name"
+
+echo "** Set the environment variables"
+mv $_share_dir/env_var.sh /etc/profile.d
+chmod +x /etc/profile.d/env_var.sh
+source /etc/profile.d/env_var.sh
 
 echo "** Create installation sudo user"
-_user_name=rtinstall
+#_user_name=rtinstall
 #useradd $_user_name
 #adduser $_user_name
 #usermod -aG sudo $_user_name
 useradd -rm -d /home/${LINUX_INSTALLER_USERID} -s /bin/bash -g root -G sudo ${LINUX_INSTALLER_USERID}
-echo "${LINUX_INSTALLER_USERID}:${LINUX_INSTALLER_PWD}" | chpasswd
+echo ${LINUX_INSTALLER_USERID}:${LINUX_INSTALLER_PWD} | chpasswd
 
 echo "** Install pre-req packages"
 apt update
 apt-get -y install python3-pip
-apt-get -y install mysql-server
 apt-get -y install python3-venv
 
 echo "** Create virtual environment"
@@ -41,13 +45,11 @@ echo "Cloning the private repository from GitHub..."
 cd $_src_dir
 git clone $_github_url
 
-
 echo "** Install and configure the server packages"
 cd $_repo_name
 pip install -e .
-
+#
 echo "** Start the Python installation"
-echo python3 src/$_repo_name/$_repo_name.py -c src/$_repo_name/$_ini
 python3 src/$_repo_name/$_repo_name.py -c src/$_repo_name/$_ini
 
 @ECHO ** Prompt to close the session
